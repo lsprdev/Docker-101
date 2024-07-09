@@ -1,12 +1,21 @@
-FROM node:16    
-WORKDIR /app
-# install vite globally
-RUN npm install -g vite
-# copy all filtes
-COPY . .    
-# install all deps
-RUN npm i
+FROM node:16
 
-# vite default port
-EXPOSE 5173    
+WORKDIR /app
+
+# Install Vite globally
+RUN npm install -g vite
+
+# Copy package.json and package-lock.json first
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy all other files
+COPY . .
+
+# Expose Vite default port
+EXPOSE 8000
+
+# Command to run the app
 CMD ["npm", "run", "dev"]
