@@ -140,3 +140,60 @@ gabriel@lspr:~$ docker-compose up
 gabriel@lspr:~$ docker-compose down
 ```
 
+## Docker Compose que Será Utilizado no Projeto
+
+```yaml
+version: '3.8'
+
+services:
+  backend:
+    image: backend:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+
+  frontend:
+    image: frontend:latest
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+```
+
+### Explicando o docker-compose.yml
+
+- **version:** Define a versão do Docker Compose que está sendo usada.
+
+- **services:** Define os serviços que compõem a aplicação. Neste caso, temos dois serviços: backend e frontend.
+
+- **backend:** e **frontend:** Define as configurações do serviço backend e frontend. Isso inclui a imagem a ser usada, o Dockerfile a ser usado para construir a imagem, os volumes a serem montados, as portas a serem expostas e a rede a ser usada.
+
+- **volume:** Define os volumes a serem montados pelos serviços. Neste caso, estamos montando o diretório do host no diretório de trabalho do container.
+
+- **ports:** Define as portas a serem expostas pelos serviços. Neste caso, estamos expondo a porta 8000 para o backend e a porta 3000 para o frontend.
+
+- **networks:** Define as redes a serem usadas pelos serviços. Neste caso, temos uma rede chamada app-network.
+
+## Referências
+
+- [Docker Documentation](https://docs.docker.com/)
+- [Docker Hub](https://hub.docker.com/)
+- [Docker Compose Documentation](https://docs.docker.com/compose/)
+- [Dockerfile Reference](https://docs.docker.com/engine/reference/builder/)
+- [Docker Compose File Reference](https://docs.docker.com/compose/compose-file/)
+
