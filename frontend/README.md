@@ -1,5 +1,19 @@
 ## Dockerfile:
 
 ```dockerfile
-FROM node:14.17.0-alpine3.13
+FROM node:16
+
+WORKDIR /app
+
+RUN npm install -g vite
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
 ```
